@@ -1,8 +1,8 @@
-﻿using WebLoginDemo.Models.database;
+﻿using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebLoginDemo.Controllers {
+namespace MiniatureCommunication2.Controllers {
 	[Authorize]
 	public class StartPageController : Controller {
 		private readonly ServerDbContext _db;

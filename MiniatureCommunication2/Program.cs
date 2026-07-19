@@ -1,15 +1,15 @@
-using WebLoginDemo.Models;
-using WebLoginDemo.Models.database;
+using MiniatureCommunication2.Models;
+using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
-using static WebLoginDemo.Const.FilePath;
-using static WebLoginDemo.DataCore;
+using static MiniatureCommunication2.Const.FilePath;
+using static MiniatureCommunication2.DataCore;
 
-namespace WebLoginDemo
+namespace MiniatureCommunication2
 {
     public class Program
     {

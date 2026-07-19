@@ -1,4 +1,4 @@
-using WebLoginDemo.Models.database;
+using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace WebLoginDemo.Areas.Account.Pages {
+namespace MiniatureCommunication2.Areas.Account.Pages {
 
     [AllowAnonymous]
     public class ChangePasswordModel : PageModel {

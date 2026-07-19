@@ -1,4 +1,4 @@
-﻿namespace WebLoginDemo.Models.admin {
+﻿namespace MiniatureCommunication2.Models.admin {
 	public class IndexModel {
 	}
 }

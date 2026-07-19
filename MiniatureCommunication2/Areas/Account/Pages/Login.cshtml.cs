@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using WebLoginDemo.Models.database;
+using MiniatureCommunication2.Models.database;
 
-namespace WebLoginDemo.Areas.Account.Pages {
+namespace MiniatureCommunication2.Areas.Account.Pages {
 	public class LoginModel : PageModel {
 		[BindProperty]
 		public InputModel Input { get; set; }

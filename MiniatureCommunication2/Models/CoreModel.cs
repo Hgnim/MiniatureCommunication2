@@ -1,3 +1,3 @@
-﻿namespace WebLoginDemo.Models {
+﻿namespace MiniatureCommunication2.Models {
 	
 }

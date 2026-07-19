@@ -4,7 +4,7 @@
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebLoginDemo.Areas.Account.Pages {
+namespace MiniatureCommunication2.Areas.Account.Pages {
     public class AccessDeniedModel : PageModel {
         public void OnGet() {
         }

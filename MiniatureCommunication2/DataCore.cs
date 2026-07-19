@@ -1,6 +1,6 @@
-﻿using WebLoginDemo.Models;
+﻿using MiniatureCommunication2.Models;
 
-namespace WebLoginDemo {
+namespace MiniatureCommunication2 {
 	internal struct DataCore {
 		internal static ConfigModel config = new();
 	}

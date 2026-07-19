@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using WebLoginDemo.Models.database;
-using static WebLoginDemo.DataCore;
+using MiniatureCommunication2.Models.database;
+using static MiniatureCommunication2.DataCore;
 
-namespace WebLoginDemo.Controllers {
+namespace MiniatureCommunication2.Controllers {
 	[Authorize(Roles = "Owner")]
 	public class AdminController : Controller {
 

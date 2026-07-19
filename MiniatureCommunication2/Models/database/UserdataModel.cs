@@ -1,4 +1,4 @@
-﻿namespace WebLoginDemo.Models.database {
+﻿namespace MiniatureCommunication2.Models.database {
 	public class UserdataModel {
 		public int Id { get; set; }//主键
 		public string Test1 { get; set; } = string.Empty;

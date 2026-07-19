@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // source: https://github.com/dotnet/aspnetcore/blob/v8.0.19/src/Identity/UI/src/Areas/Identity/Pages/V5/Account
 
-using WebLoginDemo.Models.database;
+using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace WebLoginDemo.Areas.Account.Pages {
+namespace MiniatureCommunication2.Areas.Account.Pages {
     [AllowAnonymous]
     public class LogoutModel : PageModel {
 

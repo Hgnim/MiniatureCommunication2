@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebLoginDemo.Models.database {
+namespace MiniatureCommunication2.Models.database {
 	public class ServerDbContext(DbContextOptions<ServerDbContext> opt) : IdentityDbContext<IdentityUserModel>(opt) {
 		public DbSet<InviteCode> InviteCode => Set<InviteCode>();
 		protected override void OnModelCreating(ModelBuilder builder) {

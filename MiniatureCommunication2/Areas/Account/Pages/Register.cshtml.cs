@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using WebLoginDemo.Models.database;
+using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebLoginDemo.Areas.Account.Pages {
+namespace MiniatureCommunication2.Areas.Account.Pages {
 	public class RegisterModel : PageModel {
 		[BindProperty]
 		public InputModel Input { get; set; } = default!;

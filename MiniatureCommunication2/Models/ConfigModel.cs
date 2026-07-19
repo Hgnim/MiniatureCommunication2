@@ -1,6 +1,6 @@
 ﻿using YamlDotNet.Serialization;
 
-namespace WebLoginDemo.Models {
+namespace MiniatureCommunication2.Models {
 	public class ConfigModel {
 		/// <summary>
 		/// 将配置数据保存至配置文件中

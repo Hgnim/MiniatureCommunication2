@@ -4,6 +4,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+
+	  <Authors>Hgnim</Authors>
+	  <Company>$(Authors)</Company>
+	  <Owners>$(Authors)</Owners>
+	  <Copyright>Copyright (C) 2026 $(Authors), All rights reserved.</Copyright>
+	  <PackageLicenseExpression>AGPL-3.0</PackageLicenseExpression>
+	  <Product>MiniatureCommunication2</Product>
+	  <Title>微型通信2</Title>
+	  <AssemblyTitle>$(Title)</AssemblyTitle>
+	  <Description>微型通信2</Description>
+	  <AssemblyName>微型通信2</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
