@@ -1,0 +1,11 @@
+.vs
+*/bin
+*/obj
+*/Properties
+*/appsettings*.json
+*.csproj.user
+*/.config
+*/wwwroot/dist
+node_modules
+
+*/*_data
