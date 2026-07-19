@@ -1,0 +1,29 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using WebLoginDemo.Models.database
+@inject SignInManager<IdentityUserModel> SignInManager
+@inject UserManager<IdentityUserModel> UserManager
+@model IndexModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+	<title>账户信息</title>
+</head>
+<body>
+@if (SignInManager.IsSignedIn(User)) {
+    <h2>账户信息</h2>
+    <p><strong>用户名：</strong> @User.Identity?.Name</p>
+    <hr/>
+    <a asp-page="./changepassword">更改密码</a><br/>
+    <a asp-page="./logout">登出</a><br/>
+}
+else {
+    <h2>当前未登录</h2>
+    <hr/>
+    <a asp-page="./login">登录</a><br/>
+	<a asp-page="./register">注册</a>
+}
+</body>
+</html>

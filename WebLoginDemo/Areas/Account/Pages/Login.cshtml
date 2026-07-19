@@ -1,0 +1,36 @@
+﻿@page
+@using WebLoginDemo.Areas.Account.Pages
+@model LoginModel
+@{
+    ViewData["Title"] = "登录";
+}
+
+<h1>账户登录</h1>
+<hr />
+<form id="account" method="post"> 
+    <div asp-validation-summary="ModelOnly" role="alert"></div>
+    <div>
+        <label asp-for="Input.UserName">用户名</label>
+        <input asp-for="Input.UserName" autocomplete="username" aria-required="true" placeholder="输入用户名" /> 
+        <span asp-validation-for="Input.UserName"></span>
+    </div>
+    <div>
+        <label asp-for="Input.Password">密码</label>
+        <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" placeholder="输入密码" />            
+        <span asp-validation-for="Input.Password"></span>
+    </div>
+    <div>
+        <label asp-for="Input.RememberMe">
+            <input asp-for="Input.RememberMe" />
+            @Html.DisplayNameFor(m => m.Input.RememberMe)
+        </label>
+    </div>
+    <div>
+        <button id="login-submit" type="submit">登录</button>
+    </div>
+    <div>
+        <p>
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">注册账户</a>
+        </p>
+    </div>
+</form>

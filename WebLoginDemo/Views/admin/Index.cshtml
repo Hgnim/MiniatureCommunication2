@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebLoginDemo.Models.database
+@using static WebLoginDemo.DataCore;
+@inject SignInManager<IdentityUserModel> SignInManager
+@inject UserManager<IdentityUserModel> UserManager
+@{
+	Layout = null;
+}
+<head data-page="admin_Index">
+    <title>管理员页面</title>
+    <script src="~/dist/js/site.js" type="text/javascript" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/dist/css/site.css" type="text/css" asp-append-version="true">
+
+    <script>
+        const theUrlRoot = "@config.Website.Url.UrlRoot";
+    </script>
+</head>
+<body>
+    <header>
+        <h2>欢迎管理员 @User.Identity?.Name</h2>
+        <hr/>
+    </header>
+    <div>
+        <h3>邀请码列表</h3>
+        <input type="button" value="创建邀请码" onclick="createInviteCode_click();" />
+        <div id="inviteCodeShow"></div>
+        <input type="button" value="刷新邀请码" onclick="getInviteCode_click();" />
+    </div>
+</body>

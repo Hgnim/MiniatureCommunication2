@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true, // 允许从 ES 模块中导入 CommonJS 模块
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "outDir": "wwwroot/js",
+    "allowJs": true
+  },
+  "include": [
+    "Script/ts/**/*.ts",
+    "./**/*.tsx",
+    "./**/*.vue",
+    "Script/type/**/*.d.ts",
+    "global.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}

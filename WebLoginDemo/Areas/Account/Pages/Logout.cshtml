@@ -1,0 +1,22 @@
+﻿@page
+@using WebLoginDemo.Areas.Account.Pages
+@model LogoutModel
+@{
+    ViewData["Title"] = "登出";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        if (User.Identity!.IsAuthenticated)
+        {
+            <form asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <button type="submit">点击此处退出登录</button>
+            </form>
+        }
+        else
+        {
+            <p>你已成功退出登录。</p>
+        }
+    }
+</header>
