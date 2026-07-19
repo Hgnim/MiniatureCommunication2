@@ -27,7 +27,7 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null) {
 			await _signInManager.SignOutAsync();
-			_logger.LogInformation(LoggerEventIds.UserLoggedOut, "用户已登出。");
+			//_logger.LogInformation(LoggerEventIds.UserLoggedOut, "用户已登出。");
 			if (returnUrl != null)
 				return LocalRedirect(returnUrl);
 			else {

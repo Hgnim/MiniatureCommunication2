@@ -92,7 +92,7 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 						await _userManager.AddToRoleAsync(user, iCode.Role);
 					else
 						await _userManager.AddToRoleAsync(user, "User");
-					_logger.LogInformation(LoggerEventIds.UserCreated, "User created a new account with password.");
+					//_logger.LogInformation(LoggerEventIds.UserCreated, "User created a new account with password.");
 					Console.WriteLine($"新用户注册。用户名：{user.UserName}");
 
 					//直接登录，不进行验证

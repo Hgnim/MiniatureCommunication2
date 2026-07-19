@@ -30,7 +30,21 @@
   </ItemGroup>
 
   <Target Name="WebpackBuild" BeforeTargets="Build">
-  	<Exec Command="npm run build" />
+	  <!--
+	  <PropertyGroup>
+		  <dir_wwwroot>$(ProjectDir)wwwroot</dir_wwwroot>
+		  <dir_wwwroot_exists Condition="Exists('$(dir_wwwroot)')">1</dir_wwwroot_exists>--><!--检查wwwroot文件夹是否存在-->
+	  <!--
+		  <dir_wwwroot_exists Condition="!Exists('$(dir_wwwroot)')">0</dir_wwwroot_exists>
+	  </PropertyGroup>
+
+	  <MakeDir Directories="$(dir_wwwroot)" Condition="'$(dir_wwwroot_exists)' == '0'" />--><!--如果不存在则创建该文件夹-->
+	  <!--
+	  <Message Text="目录 $(dir_wwwroot) 已创建。" Condition="'$(dir_wwwroot_exists)' == '0'" Importance="high"/>
+	  <Message Text="目录 $(dir_wwwroot) 已存在。" Condition="'$(dir_wwwroot_exists)' == '1'" Importance="high"/>
+	  -->
+	  
+	  <Exec Command="npm run build" />
   </Target>
 
 </Project>
