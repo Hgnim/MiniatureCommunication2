@@ -3,20 +3,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using MiniatureCommunication2.Models.database;
-using static MiniatureCommunication2.DataCore;
+using MiniatureCommunication2.Models.admin;
 
 namespace MiniatureCommunication2.Controllers {
 	[Authorize(Roles = "Owner")]
 	public class AdminController : Controller {
 
 		private readonly ServerDbContext _db;
-		public AdminController(ServerDbContext db) {
-			_db = db; 
+		private readonly IConfiguration _config;
+		public AdminController(
+			ServerDbContext db,
+			IConfiguration config
+			) {
+			_db = db;
+			_config = config;
 		}
 
 		//[Route("~/admin")]
 		public IActionResult Index() {
-				return View();
+			var indexModel = new IndexModel {
+				PathBase = _config["Config:Server:PathBase"]
+			};
+			return View(indexModel);
 		}
 
 

@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Const\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
@@ -26,7 +27,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.19" />
     <!--<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.19" />-->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.8" />
-    <PackageReference Include="YamlDotNet" Version="16.3.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
   </ItemGroup>
 
   <Target Name="WebpackBuild" BeforeTargets="Build">

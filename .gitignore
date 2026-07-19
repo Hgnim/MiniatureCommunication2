@@ -2,10 +2,10 @@
 */bin
 */obj
 */Properties/**/*.user
-*/appsettings*.json
 *.csproj.user
 */.config
 */wwwroot/dist
 node_modules
 
-*/*_data
+*/mc_data
+*/logs

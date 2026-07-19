@@ -1,13 +1,12 @@
-using MiniatureCommunication2.Models;
-using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MiniatureCommunication2.Models;
+using MiniatureCommunication2.Models.database;
+using Serilog;
 using System;
 using System.Threading.Tasks;
-using static MiniatureCommunication2.Const.FilePath;
-using static MiniatureCommunication2.DataCore;
 
 namespace MiniatureCommunication2
 {
@@ -15,37 +14,66 @@ namespace MiniatureCommunication2
     {
         public static async Task Main(string[] args)
         {
-			Console.WriteLine(
-@$"服务端启动"
-				);
-			try {
-				static void saveData() => ConfigModel.SaveData(configFile, config);
-
-				if (!Directory.Exists(dataDir)) Directory.CreateDirectory(dataDir);
-
-				if (!File.Exists(configFile))
-					saveData();
-				else
-					config=ConfigModel.ReadData(configFile);
-
-				if (config.UpdateConfig == true) {
-					config.UpdateConfig = false;
-					saveData();
-					Console.WriteLine("配置文件已更新，已退出服务端");
-					return;
-				}
-			} catch { Console.WriteLine("处理配置文件时出现错误!"); return; }
-
-
 			var builder = WebApplication.CreateBuilder(args);
+
+			var env = builder.Environment;
+
+			{//初始化日志系统
+				var loggerConfig = new LoggerConfiguration()
+														.MinimumLevel.Information()
+														.Enrich.FromLogContext()
+														.WriteTo.Console()//同时输出至控制台
+														.WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day/*按天输出日志文件*/);
+				loggerConfig.ReadFrom.Configuration(builder.Configuration.GetSection("SerilogConfig"));//读取json中的配置
+
+				Log.Logger = loggerConfig.CreateLogger();
+
+				builder.Host.UseSerilog(Log.Logger);//将默认日志系统替换为serilog
+			}
+			if (env.IsDevelopment())
+				Log.Information("当前为开发模式");
+			Log.Information(
+@"----------
+微型通信2
+版本：正在开发中，无版本号
+----------"
+);
+			Log.Debug("服务端开始加载");
+
+			///加载配置日志输出函数
+			void LoadConfigLogger(string configKey,bool isSuccess,string? configValue=null) {
+				if(isSuccess)
+					Log.Debug($"已加载\"{configKey}\"配置：{configValue}");
+				else
+					Log.Warning($"未成功加载\"{configKey}\"配置");
+			}
+
 			builder.Services.AddControllersWithViews();
 
-			builder.WebHost.UseUrls(config.Website.Url.Get());
+			{
+				const string key = "Config:Server:Url";
+				string? url = builder.Configuration.GetSection(key).Get<string>();
+				if (url != null) {
+					builder.WebHost.UseUrls(url);
+					LoadConfigLogger(key, true, url);
+				}
+				else
+					LoadConfigLogger(key, false);
+			}
 			builder.Services.AddHttpContextAccessor();
 			builder.Services.AddSession();
 
-			builder.Services.AddDbContext<ServerDbContext>(opt =>
-				opt.UseSqlite("Data Source="+config.Website.Database.ConnectionString));
+			{
+				const string key = "Config:Database:ConnectionString";
+				string? dbcs = builder.Configuration.GetSection(key).Get<string>();
+				if (dbcs != null) {
+					builder.Services.AddDbContext<ServerDbContext>(opt =>
+						opt.UseSqlite("Data Source=" + dbcs));
+					LoadConfigLogger(key, true, dbcs);
+				}
+				else
+					LoadConfigLogger(key, false);
+			}
 
 			#region Identity
 
@@ -143,7 +171,17 @@ namespace MiniatureCommunication2
 				}
 			}
 
-			app.UsePathBase(config.Website.Url.UrlRoot);
+			{
+				const string key = "Config:Server:PathBase";
+				//PathBase不能只包含单独的斜杠；开头必须是斜杠，结尾不能是斜杠；可以为空或为null
+				string ? pathBase = builder.Configuration.GetSection(key).Get<string>();
+				if (pathBase != null) {
+					app.UsePathBase(pathBase);
+					LoadConfigLogger(key, true, pathBase);
+				}
+				else
+					LoadConfigLogger(key, false);
+			}
 			app.UseSession();
 
 			/*// Configure the HTTP request pipeline.

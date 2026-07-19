@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using MiniatureCommunication2.Models.database
-@using static MiniatureCommunication2.DataCore;
 @inject SignInManager<IdentityUserModel> SignInManager
 @inject UserManager<IdentityUserModel> UserManager
 @{
@@ -10,10 +9,6 @@
     <title>管理员页面</title>
     <script src="~/dist/js/site.js" type="text/javascript" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/dist/css/site.css" type="text/css" asp-append-version="true">
-
-    <script>
-        const theUrlRoot = "@config.Website.Url.UrlRoot";
-    </script>
 </head>
 <body>
     <header>
@@ -25,5 +20,7 @@
         <input type="button" value="创建邀请码" onclick="createInviteCode_click();" />
         <div id="inviteCodeShow"></div>
         <input type="button" value="刷新邀请码" onclick="getInviteCode_click();" />
+        <br />
+        <p>@Model.PathBase</p>
     </div>
 </body>

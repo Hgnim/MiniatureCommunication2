@@ -4,11 +4,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MiniatureCommunication2.Areas.Account.Pages
 {
-	[AllowAnonymous]
 	public class IndexModel : PageModel
     {
-        public void OnGet()
-        {
-        }
-    }
+		/*private readonly IConfiguration _config;
+
+		public IndexModel(
+			IConfiguration config
+			) {
+			_config = config;
+		}*/
+
+		public void OnGet() {
+		}
+	}
 }
