@@ -1,10 +1,4 @@
 //source: https://github.com/dotnet/aspnetcore/blob/v8.0.19/src/Identity/UI/src/Areas/Identity/Pages/V5/Account/Register.cshtml.cs
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,8 +6,15 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using MiniatureCommunication2.Database;
+using Serilog;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace MiniatureCommunication2.Areas.Account.Pages {
 	public class RegisterModel : PageModel {
@@ -45,16 +46,16 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 		}
 
 		//TUser变为IdentityUserModel，因为不能使用泛型类
-		private readonly SignInManager<IdentityUserModel> _signInManager;
-		private readonly UserManager<IdentityUserModel> _userManager;
-		private readonly IUserStore<IdentityUserModel> _userStore;
+		private readonly SignInManager<Database.IdentityUser> _signInManager;
+		private readonly UserManager<Database.IdentityUser> _userManager;
+		private readonly IUserStore<Database.IdentityUser> _userStore;
 		private readonly ILogger<RegisterModel> _logger;
 		private readonly ServerDbContext _db;
 
 		public RegisterModel(
-			UserManager<IdentityUserModel> userManager,
-			IUserStore<IdentityUserModel> userStore,
-			SignInManager<IdentityUserModel> signInManager,
+			UserManager<Database.IdentityUser> userManager,
+			IUserStore<Database.IdentityUser> userStore,
+			SignInManager<Database.IdentityUser> signInManager,
 			ILogger<RegisterModel> logger,
 			ServerDbContext db) {
 			_userManager = userManager;
@@ -83,7 +84,7 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 			ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 			if (ModelState.IsValid) {
 				//直接使用用户名创建用户
-				var user = new IdentityUserModel { UserName = Input.UserName };
+				var user = new Database.IdentityUser { UserName = Input.UserName };
 
 				var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -93,7 +94,7 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 					else
 						await _userManager.AddToRoleAsync(user, "User");
 					//_logger.LogInformation(LoggerEventIds.UserCreated, "User created a new account with password.");
-					Console.WriteLine($"新用户注册。用户名：{user.UserName}");
+					Log.Information($"新用户注册。用户名：{user.UserName}");
 
 					//直接登录，不进行验证
 					await _signInManager.SignInAsync(user, isPersistent: false);

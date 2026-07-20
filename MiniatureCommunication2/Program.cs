@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MiniatureCommunication2.Database;
 using MiniatureCommunication2.Models;
-using MiniatureCommunication2.Models.database;
 using Serilog;
 using System;
 using System.Threading.Tasks;
+using IdentityUser = MiniatureCommunication2.Database.IdentityUser;
 
 namespace MiniatureCommunication2
 {
@@ -77,7 +78,7 @@ namespace MiniatureCommunication2
 
 			#region Identity
 
-			builder.Services.AddIdentity<IdentityUserModel, IdentityRole>()//不使用AddDefaultIdentity，使用本地页面与逻辑
+			builder.Services.AddIdentity<IdentityUser, IdentityRole>()//不使用AddDefaultIdentity，使用本地页面与逻辑
 				.AddEntityFrameworkStores<ServerDbContext>();
 			    //.AddDefaultTokenProviders();//不需要添加对于令牌验证提供的程序
 
@@ -108,7 +109,7 @@ namespace MiniatureCommunication2
 
 			builder.Services.ConfigureApplicationCookie(options => {
 				// Cookie settings
-				options.Cookie.HttpOnly = true;//只能通过HTTP访问
+				options.Cookie.HttpOnly = true;//只能通过HTTP访问，无法通过js访问。防止xxs攻击
 				options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
 				options.LoginPath = "/Account/Login";//登录页面
@@ -144,29 +145,29 @@ namespace MiniatureCommunication2
 				{
 					//创建默认管理员用户
 					string ownerUserName = "admin", ownerPassword = "Admin@0000",ownerRole = "Owner";
-					UserManager<IdentityUserModel> userMgr = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUserModel>>();
+					UserManager<Database.IdentityUser> userMgr = scope.ServiceProvider.GetRequiredService<UserManager<Database.IdentityUser>>();
 					RoleManager<IdentityRole> roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
 					//确保管理员用户存在
-					IdentityUserModel? admin = await userMgr.FindByNameAsync(ownerUserName);
+					Database.IdentityUser? admin = await userMgr.FindByNameAsync(ownerUserName);
 					if (admin == null) {
-						admin = new IdentityUserModel {
+						admin = new Database.IdentityUser {
 							UserName = ownerUserName,
 							//Email为空，不使用邮箱
 						};
 
 						IdentityResult createResult = await userMgr.CreateAsync(admin, ownerPassword);
 						if (createResult.Succeeded)
-							Console.WriteLine($"已创建默认管理员用户，用户名：{ownerUserName}，密码：{ownerPassword}");
+							Log.Information($"已创建默认管理员用户，用户名：{ownerUserName}，密码：{ownerPassword}");
 						else
-							throw new Exception("创建管理员失败：" + string.Join(", ", createResult.Errors));
+							Log.Warning("创建默认管理员失败：" + string.Join(", ", createResult.Errors));
 					}
 
 					//为管理员账户设置角色
 					if (!await userMgr.IsInRoleAsync(admin, ownerRole)) {
 						IdentityResult addRoleResult = await userMgr.AddToRoleAsync(admin, ownerRole);
 						if (!addRoleResult.Succeeded)
-							throw new Exception("给管理员加角色失败：" + string.Join(", ", addRoleResult.Errors));
+							Log.Warning("给默认管理员加角色失败：" + string.Join(", ", addRoleResult.Errors));
 					}
 				}
 			}

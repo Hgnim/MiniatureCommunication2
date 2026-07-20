@@ -1,6 +1,6 @@
-﻿using MiniatureCommunication2.Models.database;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MiniatureCommunication2.Database;
 
 namespace MiniatureCommunication2.Controllers {
 	[Authorize]
@@ -17,7 +17,7 @@ namespace MiniatureCommunication2.Controllers {
 
 		[HttpPost]
 		public async Task<IActionResult> Save(string t1,string t2) {
-			_db.Userdata.Add(new UserdataModel { Test1 = t1,Test2=t2 });
+			_db.Userdata.Add(new Userdata { Test1 = t1,Test2=t2 });
 			await _db.SaveChangesAsync();
 			Console.WriteLine(t1 + ", " + t2);
 			return View("Index");

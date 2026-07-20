@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
-using MiniatureCommunication2.Models.database;
 using MiniatureCommunication2.Models.Admin;
+using MiniatureCommunication2.Database;
 
 namespace MiniatureCommunication2.Controllers {
 	[Authorize(Roles = "Owner")]

@@ -1,4 +1,3 @@
-using MiniatureCommunication2.Models.database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using MiniatureCommunication2.Database;
 
 namespace MiniatureCommunication2.Areas.Account.Pages {
 
@@ -39,12 +39,12 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
         }
 
 
-		private readonly UserManager<IdentityUserModel> _userManager;
-		private readonly SignInManager<IdentityUserModel> _signInManager;
+		private readonly UserManager<Database.IdentityUser> _userManager;
+		private readonly SignInManager<Database.IdentityUser> _signInManager;
 
 		public ChangePasswordModel(
-			UserManager<IdentityUserModel> userManager,
-			SignInManager<IdentityUserModel> signInManager) {
+			UserManager<Database.IdentityUser> userManager,
+			SignInManager<Database.IdentityUser> signInManager) {
 			_userManager = userManager;
 			_signInManager = signInManager;
 		}

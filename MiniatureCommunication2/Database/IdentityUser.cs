@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace MiniatureCommunication2.Models.database {
-	public class IdentityUserModel:IdentityUser {
+namespace MiniatureCommunication2.Database {
+	public class IdentityUser: Microsoft.AspNetCore.Identity.IdentityUser {
 		// 使用纯用户名，Email永远为空
 		public override string? Email { get => null; set => _ = value; }
 	}

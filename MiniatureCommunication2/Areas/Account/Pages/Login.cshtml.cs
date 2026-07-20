@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using MiniatureCommunication2.Models.database;
+using MiniatureCommunication2.Database;
 
 namespace MiniatureCommunication2.Areas.Account.Pages {
 	public class LoginModel : PageModel {
@@ -35,11 +35,11 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 			public bool RememberMe { get; set; }
 		}
 
-		private readonly SignInManager<IdentityUserModel> _signInManager;
+		private readonly SignInManager<Database.IdentityUser> _signInManager;
 		private readonly ILogger<LoginModel> _logger;
 
 		public LoginModel(
-			SignInManager<IdentityUserModel> signInManager, 
+			SignInManager<Database.IdentityUser> signInManager, 
 			ILogger<LoginModel> logger) {
 			_signInManager = signInManager;
 			_logger = logger;

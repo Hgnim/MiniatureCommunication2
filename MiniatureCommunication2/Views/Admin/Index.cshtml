@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using MiniatureCommunication2.Models.database
-@inject SignInManager<IdentityUserModel> SignInManager
-@inject UserManager<IdentityUserModel> UserManager
+@using MiniatureCommunication2.Database
+@using IdentityUser = MiniatureCommunication2.Database.IdentityUser
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
 	Layout = null;
 }
