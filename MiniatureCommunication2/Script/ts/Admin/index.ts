@@ -1,4 +1,4 @@
-import '../../../Style/scss/admin/index.scss';
+import '../../../Style/scss/Admin/index.scss';
 import $ from 'jquery';
 export function init() {  
     (window as any).createInviteCode_click = createInviteCode_click;
@@ -6,7 +6,7 @@ export function init() {
 }
 function createInviteCode_click() {
     $.ajax({
-        url: theUrlRoot + '/admin/CreateInviteCode',
+        url: theUrlRoot + '/Admin/CreateInviteCode',
         type: "GET",
         contentType: "application/json",
         success: function (response) {
@@ -21,7 +21,7 @@ function getInviteCode_click(value: string | null = null) {
     }
     if (value == null) {
         $.ajax({
-            url: theUrlRoot + '/admin/GetInviteCode',
+            url: theUrlRoot + '/Admin/GetInviteCode',
             type: "GET",
             contentType: "application/json",
             success: function (response) {
