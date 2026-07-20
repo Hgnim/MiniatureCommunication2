@@ -10,18 +10,32 @@
     <title>管理员页面</title>
     <script src="~/dist/js/site.js" type="text/javascript" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/dist/css/site.css" type="text/css" asp-append-version="true">
+
+    <script>
+        const urlPathBase="@MiniatureCommunication2.StaticData.Config.PathBase";
+    </script>
 </head>
 <body>
     <header>
         <h2>欢迎管理员 @User.Identity?.Name</h2>
-        <hr/>
     </header>
+    <hr />
     <div>
         <h3>邀请码列表</h3>
+        <div id="inviteCodeList">请点击刷新按钮</div>
+        <input type="button" value="刷新邀请码列表" onclick="getInviteCode_click();" />
         <input type="button" value="创建邀请码" onclick="createInviteCode_click();" />
-        <div id="inviteCodeShow"></div>
-        <input type="button" value="刷新邀请码" onclick="getInviteCode_click();" />
-        <br />
-        <p>@Model.PathBase</p>
+        <input type="button" value="清理失效邀请码" onclick="clearInviteCode_click();" />
+    </div>
+    <hr />
+    <div>
+        <h3>用户列表</h3>
+        <div id="userList"></div>
+        <input type="button" value="刷新用户列表" onclick="getUserList_click();"/>
+        <br/>
+        <input type="text" title="输入用户ID以对其操作" placeholder="输入用户ID以对其操作" id="userIdInput" />
+        <input type="button" value="锁定用户" onclick="lockUser_click();"/>
+        <input type="button" value="解锁用户" onclick="unlockUser_click();"/>
+        <input type="button" value="删除用户" onclick="deleteUser_click();"/>
     </div>
 </body>

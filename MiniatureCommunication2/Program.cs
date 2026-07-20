@@ -177,6 +177,7 @@ namespace MiniatureCommunication2
 				//PathBase不能只包含单独的斜杠；开头必须是斜杠，结尾不能是斜杠；可以为空或为null
 				string ? pathBase = builder.Configuration.GetSection(key).Get<string>();
 				if (pathBase != null) {
+					StaticData.Config.PathBase = pathBase;//保存至静态数据中，更方便其它地方使用
 					app.UsePathBase(pathBase);
 					LoadConfigLogger(key, true, pathBase);
 				}

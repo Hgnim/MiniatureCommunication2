@@ -19,11 +19,11 @@
     "Script/ts/**/*.ts",
     "./**/*.tsx",
     "./**/*.vue",
-    "Script/type/**/*.d.ts",
     "global.d.ts"
   ],
   "exclude": [
     "node_modules",
-    "wwwroot"
+    "wwwroot",
+    "Script/@types/**/*.d.ts"
   ]
 }

@@ -1,3 +1,11 @@
 head[data-page="Admin_Index"] ~ body {
     background-color: red;
+
+
+    #inviteCodeList {
+        white-space: pre-wrap;
+    }
+    #userList {
+        white-space: pre-wrap;
+    }
 }

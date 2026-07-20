@@ -7,12 +7,33 @@ namespace MiniatureCommunication2.Database {
 		public override string? Email { get => null; set => _ = value; }
 	}
 
-	public class InviteCode {
-		[Key]
-		public string Code { get; set; }//邀请码（主键）
+	/// <summary>
+	/// IdentityUser的简化版本，仅包含部分属性
+	/// </summary>
+	public class IdentityUserMini {
+		public required string Id { get; set; }
+		public string? UserName { get; set; }
+		public DateTimeOffset? LockoutEnd { get; set; }
+	}
 
-		public bool Used { get; set; }//是否已使用
-		public DateTime? ExpireAt { get; set; }//过期时间
-		public string? Role { get; set; }//预置角色
+	public class InviteCode {
+		/// <summary>
+		/// 邀请码（主键）
+		/// </summary>
+		[Key]
+		public required string Code { get; set; }
+
+		/// <summary>
+		/// 是否已使用
+		/// </summary>
+		public bool Used { get; set; }
+		/// <summary>
+		/// 过期时间
+		/// </summary>
+		public DateTime? ExpireAt { get; set; }
+		/// <summary>
+		/// 预置角色
+		/// </summary>
+		public string? Role { get; set; }
 	}
 }
