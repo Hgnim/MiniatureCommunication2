@@ -1,5 +1,5 @@
 ﻿namespace MiniatureCommunication2.Database {
-	public class Userdata {
+	public class Userdata {//目前暂未使用
 		public int Id { get; set; }//主键
 		public string Test1 { get; set; } = string.Empty;
 		public string Test2 { get; set; } = string.Empty;
