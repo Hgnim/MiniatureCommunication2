@@ -1,0 +1,25 @@
+﻿<head data-page="Talk_Index">
+	<title>微型通信2</title>
+	<script src="~/dist/js/site.js" type="text/javascript" asp-append-version="true"></script>
+	<link rel="stylesheet" href="~/dist/css/site.css" type="text/css" asp-append-version="true">
+
+	<script>
+		const urlPathBase="@MiniatureCommunication2.StaticData.Config.PathBase";
+	</script>
+</head>
+<body>
+	<input type="button" value="刷新列表" onclick="conversationList_getList();" />
+	<div id="conversationList"></div>
+	<hr/>
+	<div id="talkPanel">
+		<div id="messagePanel"></div>
+		<div>
+			<input type="text" id="sendContent"/>
+			<input type="button" id="sendBtn"/>
+		</div>
+	</div>
+
+	<script>
+		conversationList_getList();
+	</script>
+</body>

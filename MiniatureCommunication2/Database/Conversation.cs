@@ -164,4 +164,17 @@ namespace MiniatureCommunication2.Database {
 		/// </summary>
 		public long? ReplyToMsgId { get; set; }
 	}
+
+	//DTO (Data Transfer Object)
+	/// <summary>
+	/// 会话DTO
+	/// <br/>
+	/// 一般用于传递给ConversationRole的Member的信息
+	/// </summary>
+	public class ConversationDTO_CrMember {
+		public required long Id { get; set; }
+		public required ConversationType Type { get; set; }
+		public required long? LastMessageId { get; set; }
+		public required string? Group_Title { get; set; }
+	}
 }

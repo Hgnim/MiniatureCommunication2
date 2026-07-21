@@ -221,7 +221,7 @@ namespace MiniatureCommunication2
 			app.UseAuthorization();
 			app.MapControllerRoute(
 				name: "default",
-				pattern: "{controller=StartPage}/{action=Index}"); // /{id?}");
+				pattern: "{controller=Talk}/{action=Index}"); // /{id?}");
 			app.Run();
 		}
 	}

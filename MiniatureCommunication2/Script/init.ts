@@ -1,7 +1,7 @@
 ﻿//根据不同的页面加载不同的模块
 const pageMap: Record<string, () => Promise<any>> = {
-    StartPage_Index: () => import('./ts/StartPage/index'),
     Admin_Index: () => import('./ts/Admin/index'),
+    Talk_Index: () => import('./ts/Talk/index'),
 };
 
 //根据head上的data-page属性来决定加载哪个模块
