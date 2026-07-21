@@ -48,20 +48,14 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 		//TUser变为IdentityUserModel，因为不能使用泛型类
 		private readonly SignInManager<Database.IdentityUser> _signInManager;
 		private readonly UserManager<Database.IdentityUser> _userManager;
-		private readonly IUserStore<Database.IdentityUser> _userStore;
-		private readonly ILogger<RegisterModel> _logger;
 		private readonly ServerDbContext _db;
 
 		public RegisterModel(
 			UserManager<Database.IdentityUser> userManager,
-			IUserStore<Database.IdentityUser> userStore,
 			SignInManager<Database.IdentityUser> signInManager,
-			ILogger<RegisterModel> logger,
 			ServerDbContext db) {
 			_userManager = userManager;
-			_userStore = userStore;
 			_signInManager = signInManager;
-			_logger = logger;
 			_db = db;
 		}
 
@@ -93,11 +87,31 @@ namespace MiniatureCommunication2.Areas.Account.Pages {
 						await _userManager.AddToRoleAsync(user, iCode.Role);
 					else
 						await _userManager.AddToRoleAsync(user, "User");
-					//_logger.LogInformation(LoggerEventIds.UserCreated, "User created a new account with password.");
 					Log.Information($"新用户注册。用户名：{user.UserName}");
 
 					//直接登录，不进行验证
 					await _signInManager.SignInAsync(user, isPersistent: false);
+
+					{
+						var u = await _userManager.GetUserAsync(User);//获取当前登录的用户数据
+
+						if(u!=null){
+							{
+								var groups =
+									await _db.Conversation
+											 .Where(p => p.Group_ForceUserJoinOnReg == true)//寻找需要让用户在注册时强制加入的群组
+											 .ToListAsync();
+								foreach (var group in groups) {//强制用户加入目标群组
+									_db.ConversationMember.Add(new ConversationMember {
+										ConversationId = group.Id,
+										UserId = u.Id,
+									});
+								}
+							}
+							await _db.SaveChangesAsync();
+						}
+					}
+
 					return LocalRedirect(returnUrl);
 				}
 				foreach (var error in result.Errors) {

@@ -40,7 +40,7 @@ namespace MiniatureCommunication2
 ----------"
 );
 			Log.Debug("服务端开始加载");
-
+			
 			///加载配置日志输出函数
 			void LoadConfigLogger(string configKey,bool isSuccess,string? configValue=null) {
 				if(isSuccess)
@@ -127,47 +127,68 @@ namespace MiniatureCommunication2
 			app.MapRazorPages();
 
 			using (var scope = app.Services.CreateScope()) {
-				//如果不存在则自动创建数据库文件
-				scope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.EnsureCreated();
-
-				scope.ServiceProvider.GetRequiredService<ServerDbContext>().Database.Migrate(); // 自动应用迁移
-
+				ServerDbContext db = scope.ServiceProvider.GetRequiredService<ServerDbContext>();
+				//当前是否没有数据库文件。如果为true则说明是第一次运行，数据库文件是新建的
+				bool isNewDatabase = db.Database.EnsureCreated();//如果不存在则自动创建数据库文件
+				db.Database.Migrate(); // 自动应用迁移
+				if (isNewDatabase)
+					Log.Information("数据库文件不存在，已新建数据库");
+				else
+					Log.Debug("数据库文件存在");
 
 				{
 					//检查并创建角色
 					RoleManager<IdentityRole> roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-					string[] roles = ["Owner", /*"Administrator", "Manager",*/ "User" ];
+					string[] roles = ["Owner", /*"Administrator", "Manager",*/ "User"];
 					foreach (var r in roles) {
 						if (!await roleMgr.RoleExistsAsync(r))
 							await roleMgr.CreateAsync(new IdentityRole(r));
 					}
 				}
-				{
-					//创建默认管理员用户
-					string ownerUserName = "admin", ownerPassword = "Admin@0000",ownerRole = "Owner";
-					UserManager<Database.IdentityUser> userMgr = scope.ServiceProvider.GetRequiredService<UserManager<Database.IdentityUser>>();
-					RoleManager<IdentityRole> roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+				if (isNewDatabase) {
+					{
+						//创建默认管理员用户
+						string ownerUserName = "admin", ownerPassword = "Admin@0000", ownerRole = "Owner";
+						UserManager<Database.IdentityUser> userMgr = scope.ServiceProvider.GetRequiredService<UserManager<Database.IdentityUser>>();
+						RoleManager<IdentityRole> roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-					//确保管理员用户存在
-					Database.IdentityUser? admin = await userMgr.FindByNameAsync(ownerUserName);
-					if (admin == null) {
-						admin = new Database.IdentityUser {
-							UserName = ownerUserName,
-							//Email为空，不使用邮箱
-						};
+						//确保管理员用户存在
+						Database.IdentityUser? admin = await userMgr.FindByNameAsync(ownerUserName);
+						if (admin == null) {
+							admin = new Database.IdentityUser {
+								UserName = ownerUserName,
+								//Email为空，不使用邮箱
+							};
 
-						IdentityResult createResult = await userMgr.CreateAsync(admin, ownerPassword);
-						if (createResult.Succeeded)
-							Log.Information($"已创建默认管理员用户，用户名：{ownerUserName}，密码：{ownerPassword}");
+							IdentityResult createResult = await userMgr.CreateAsync(admin, ownerPassword);
+							if (createResult.Succeeded)
+								Log.Information($"已创建默认管理员用户，用户名：{ownerUserName}，密码：{ownerPassword}");
+							else
+								Log.Warning("创建默认管理员失败：" + string.Join(", ", createResult.Errors));
+						}
 						else
-							Log.Warning("创建默认管理员失败：" + string.Join(", ", createResult.Errors));
-					}
+							Log.Debug($"默认管理员用户已存在");
 
-					//为管理员账户设置角色
-					if (!await userMgr.IsInRoleAsync(admin, ownerRole)) {
-						IdentityResult addRoleResult = await userMgr.AddToRoleAsync(admin, ownerRole);
-						if (!addRoleResult.Succeeded)
-							Log.Warning("给默认管理员加角色失败：" + string.Join(", ", addRoleResult.Errors));
+						//为管理员账户设置角色
+						if (!await userMgr.IsInRoleAsync(admin, ownerRole)) {
+							IdentityResult addRoleResult = await userMgr.AddToRoleAsync(admin, ownerRole);
+							if (addRoleResult.Succeeded)
+								Log.Information($"已将默认管理员用户的身份设置为：{ownerRole}");
+							else
+								Log.Warning("给默认管理员设置身份时失败：" + string.Join(", ", addRoleResult.Errors));
+						}
+						else
+							Log.Debug($"默认管理员用户当前身份为 {ownerRole} ，无需设置");
+					}
+					{
+						db.Conversation.Add(new Conversation {
+							Type = ConversationType.Group,
+							Group_Title = "公共群组",
+							Group_DisShowUserList = true,
+							Group_ForceUserJoinOnReg = true,
+						});
+						await db.SaveChangesAsync();
+						Log.Information("已创建默认群组");
 					}
 				}
 			}

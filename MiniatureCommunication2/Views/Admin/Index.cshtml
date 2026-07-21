@@ -36,6 +36,6 @@
         <input type="text" title="输入用户ID以对其操作" placeholder="输入用户ID以对其操作" id="userIdInput" />
         <input type="button" value="锁定用户" onclick="lockUser_click();"/>
         <input type="button" value="解锁用户" onclick="unlockUser_click();"/>
-        <input type="button" value="删除用户" onclick="deleteUser_click();"/>
+        <input type="button" value="删除用户" onclick="deleteUser_click();" disabled/><!--暂时禁用（傻瓜式禁用，如果想强制使用该功能，改网页源代码或直接发送请求即可），因为目前该逻辑还不会删除目标用户的其它相关数据-->
     </div>
 </body>

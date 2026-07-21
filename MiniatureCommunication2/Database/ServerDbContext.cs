@@ -22,5 +22,9 @@ namespace MiniatureCommunication2.Database {
 
 		public DbSet<Userdata> Userdata => Set<Userdata>();
 		public DbSet<ServerData> ServerData => Set<ServerData>();
+
+		public DbSet<Conversation> Conversation => Set<Conversation>();
+		public DbSet<ConversationMember> ConversationMember => Set<ConversationMember>();
+		public DbSet<ConversationMessage> ConversationMessage => Set<ConversationMessage>();
 	}
 }

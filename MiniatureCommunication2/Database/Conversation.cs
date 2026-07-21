@@ -1,4 +1,7 @@
-﻿namespace MiniatureCommunication2.Database {
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MiniatureCommunication2.Database {
 	public enum ConversationType {
 		/// <summary>
 		/// 一对一会话（私聊）
@@ -44,7 +47,9 @@
 		/// 主键
 		/// 自增
 		/// </summary>
-		public required long Id { get; set; }
+		[Key]//主键
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]//自增
+		public long Id { get; set; }
 		/// <summary>
 		/// 会话类型
 		/// </summary>
@@ -56,7 +61,7 @@
 		/// <summary>
 		/// 创建会话时间，可能冗余
 		/// </summary>
-		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+		public DateTimeOffset CreatedAt { get; set; } = DateTime.UtcNow;
 
 
 		//下列属性只在群组会话中使用，一对一会话中为null
@@ -65,9 +70,13 @@
 		/// </summary>
 		public string? Group_Title { get; set; }
 		/// <summary>
-		/// 是否显示用户列表
+		/// 是否禁用显示成员列表
 		/// </summary>
-		public bool? Group_ShowUserList { get; set; }
+		public bool? Group_DisShowUserList { get; set; }
+		/// <summary>
+		/// 在注册时是否强制用户加入该群组
+		/// </summary>
+		public bool? Group_ForceUserJoinOnReg { get; set; }
 	}
 	/// <summary>
 	/// 会话成员实体类
@@ -80,6 +89,8 @@
 		/// 主键
 		/// 自增
 		/// </summary>
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public long Id { get; set; }
 		/// <summary>
 		/// 用户id
@@ -100,7 +111,7 @@
 		/// <summary>
 		/// 加入会话的时间，可能冗余
 		/// </summary>
-		public DateTime JoinedAt { get; set; } = DateTime.UtcNow;
+		public DateTimeOffset JoinedAt { get; set; } = DateTime.UtcNow;
 		/// <summary>
 		/// 最后阅读的消息id
 		/// </summary>
@@ -117,6 +128,8 @@
 		/// 主键
 		/// 自增
 		/// </summary>
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public long Id { get; set; }
 		/// <summary>
 		/// 发送者的用户id
@@ -141,7 +154,7 @@
 		/// <summary>
 		/// 发送消息时间
 		/// </summary>
-		public DateTime SentAt { get; set; } = DateTime.UtcNow;
+		public DateTimeOffset SentAt { get; set; } = DateTime.UtcNow;
 		/// <summary>
 		/// 回复的消息id
 		/// <br/>
