@@ -2,6 +2,7 @@
 const pageMap: Record<string, () => Promise<any>> = {
     Admin_Index: () => import('./ts/Admin/index'),
     Talk_Index: () => import('./ts/Talk/index'),
+    Home_Index:()=>import('./ts/Home/index'),
 };
 
 //根据head上的data-page属性来决定加载哪个模块

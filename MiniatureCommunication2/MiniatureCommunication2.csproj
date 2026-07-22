@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Const\" />
+    <Folder Include="Script\ts\Home\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

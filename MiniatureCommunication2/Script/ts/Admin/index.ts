@@ -1,5 +1,3 @@
-/// <reference path="../../@types/Admin/index.d.ts" />
-
 import '../../../Style/scss/Admin/index.scss';
 import $ from 'jquery';
 import type InviteCode from '../../types/MC2/Database/InviteCode.type';
